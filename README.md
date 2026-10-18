@@ -95,7 +95,7 @@ All numbers come from real runs on 2026-10-18: `dolphin3-3b` (Dolphin 3.0 · Lla
 |---|---|---|
 | tool-call validity (parsed + schema-valid / attempted) | 157/160 (98.1 %) | 150/153 (98.0 %) |
 | mean LLM steps per question (excluding the 5 screened refusals) | 5.33 | 5.10 |
-| final reports rejected at least once by a guardrail | 27/35 | 27/35 (see summary) |
+| final reports rejected at least once by a guardrail | 27/35 | 27/35 |
 | stop reasons | 29 final_report, 5 input refusal, 1 invalid-call limit | same |
 
 ### What the numbers say (and don't)
