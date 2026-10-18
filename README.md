@@ -170,7 +170,7 @@ Use `--model` / `TSAGENT_MODEL` to try a different Ollama model, and `--decoding
 
 ## Tests and CI
 
-`python -m pytest -q` runs 73 tests (parser, calculator, safety gate, agent loop with a scripted mock LLM, retrieval and graders) in under a second, with no model needed. The GitHub Actions workflow is in [`ci/github-actions-ci.yml`](ci/github-actions-ci.yml), not in `.github/workflows/`, because the token used to publish this repo lacked the `workflow` scope. To enable it, move the file to `.github/workflows/ci.yml`. It runs pytest on Python 3.12 and 3.13 plus a model-free CLI smoke test.
+`python -m pytest -q` runs 73 tests (parser, calculator, safety gate, agent loop with a scripted mock LLM, retrieval and graders) in under a second, with no model needed. The GitHub Actions workflow ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs pytest on Python 3.12 and 3.13 plus a model-free CLI smoke test.
 
 ## License
 
