@@ -1,0 +1,23 @@
+QUESTION: Relay shows phase C current at zero while phases A and B look normal, and it reports residual current equal to the phase load. There is a faint buzzing at a terminal block.
+
+[step 1] 4.0s search_manual({"query": "residual current transformer, phase load, buzzing terminal block"})
+    thought: Buzzing at terminal block could be related to the residual current issue.
+    -> {"status": "ok", "results": ["ct_vt_wiring:4 (CT and VT (PT) Wiring Checks / Open or high-resistance CT circuits, score 22.8)", "ct_vt_wiring:1 (CT and VT (PT) Wiring Checks / Never open-circuit an energized CT secondary, score 10.7)", "relay_basics:3 (Protective Relay Basics (ANSI Device Numbers) / ...
+[step 2] 7.8s check_safety({"task": "Check for any unsafe conditions, such as energized terminals, and ensure all necessary safety precautions are taken."})
+    thought: Buzzing at terminal block could be related to the residual current issue.
+    -> {"status": "CONDITIONAL", "reason": "energized work only if de-energizing is infeasible: qualified person, energized work permit, job briefing and arc-rated PPE", "precautions": ["Wear PPE per the arc-flash/shock risk assessment while testing", "Qualified person only, with documented justification a ...
+[step 3] 15.5s final_report({"likely_cause": "Residual current equal to the phase load could indicate a CT circuit issue.", "cause_category": "ct_circuit", "steps": ["De-energize, apply lockout/tagout, wear PPE and verify absence of voltage.", "Che ...)
+    thought: Buzzing at terminal block could be related to the residual current issue.
+
+stop: final_report | llm calls: 3 | valid tool calls: 3/3 | 27.2s
+
+CATEGORY: ct_circuit
+CAUSE: Residual current equal to the phase load could indicate a CT circuit issue.
+STEPS:
+1. De-energize, apply lockout/tagout, wear PPE and verify absence of voltage.
+2. Check CT circuit for open or loose connections.
+3. Measure loop resistance and burden only with the circuit isolated per procedure.
+VERIFY: Verify the CT circuit is not open or loose by checking the loop resistance and burden measurements.
+CITATIONS: ct_vt_wiring:4, ct_vt_wiring:1, relay_basics:3
+
+Educational use only. Follow your site procedures, the equipment manufacturer's instructions, and qualified personnel.

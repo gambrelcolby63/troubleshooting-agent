@@ -1,0 +1,58 @@
+<!doctype html><meta charset=utf-8><title>tsagent trace</title>
+<style>body{font-family:system-ui,sans-serif;max-width:900px;margin:2em auto;color:#222}
+.step{border-left:4px solid #4C78A8;padding:.4em .8em;margin:.6em 0;background:#f6f8fa}.bad{border-color:#d62728}
+.g{border-left:4px solid #ff7f0e;padding:.4em .8em;margin:.6em 0;background:#fff4e5}.n{color:#777;font-size:.85em;margin-right:.6em}
+.th{color:#555;font-style:italic}.err{color:#d62728}pre{white-space:pre-wrap;font-size:.8em}</style>
+<h2>Question</h2><p>Relay shows phase C current at zero while phases A and B look normal, and it reports residual current equal to the phase load. There is a faint buzzing at a terminal block.</p><h2>Trace</h2><div class='step ok'><span class='n'>step 1 &middot; 4.0s</span><b>search_manual</b> <code>{&quot;query&quot;: &quot;residual current transformer, phase load, buzzing terminal block&quot;}</code><div class='th'>Buzzing at terminal block could be related to the residual current issue.</div><pre>{
+ &quot;status&quot;: &quot;ok&quot;,
+ &quot;results&quot;: [
+  {
+   &quot;id&quot;: &quot;ct_vt_wiring:4&quot;,
+   &quot;title&quot;: &quot;CT and VT (PT) Wiring Checks / Open or high-resistance CT circuits&quot;,
+   &quot;score&quot;: 22.8,
+   &quot;categories&quot;: [
+    &quot;ct_circuit&quot;
+   ],
+   &quot;text&quot;: &quot;Signs of an open or loose CT circuit: one phase current reads zero or erratic while the others are normal, residual (ground) current appears equal to the missing phase, buzzing or arcing at terminal blocks, and heating at a loose terminal. Check terminations, shorting blocks, and test switches. Measure loop resistance and burden only with the circuit isolated per procedure.&quot;
+  },
+  {
+   &quot;id&quot;: &quot;ct_vt_wiring:1&quot;,
+   &quot;title&quot;: &quot;CT and VT (PT) Wiring Checks / Never open-circuit an energized CT secondary&quot;,
+   &quot;score&quot;: 10.7,
+   &quot;categories&quot;: [
+    &quot;ct_circuit&quot;,
+    &quot;procedure&quot;
+   ],
+   &quot;text&quot;: &quot;A current transformer drives current into its burden. If the secondary is opened while primary current flows, the secondary voltage can rise to thousands of volts, which is a shock hazard and can destroy the CT. Use the shorting terminal block to short the CT secondary before disconnecting a relay or meter, and confirm the shorting screws or links are installed correctly.&quot;
+  },
+  {
+   &quot;id&quot;: &quot;relay_basics:3&quot;,
+   &quot;title&quot;: &quot;Protective Relay Basics (ANSI Device Numbers) / Differential protection (87)&quot;,
+   &quot;score&quot;: 9.3,
+   &quot;categories&quot;: [
+    &quot;ct_circuit&quot;,
+    &quot;relay_settings&quot;
+   ],
+   &quot;text&quot;: &quot;An 87 relay compares current entering and leaving a protected zone (transformer, bus, gener</pre></div><div class='step ok'><span class='n'>step 2 &middot; 7.8s</span><b>check_safety</b> <code>{&quot;task&quot;: &quot;Check for any unsafe conditions, such as energized terminals, and ensure all necessary safety precautions are taken.&quot;}</code><div class='th'>Buzzing at terminal block could be related to the residual current issue.</div><pre>{
+ &quot;status&quot;: &quot;CONDITIONAL&quot;,
+ &quot;reason&quot;: &quot;energized work only if de-energizing is infeasible: qualified person, energized work permit, job briefing and arc-rated PPE&quot;,
+ &quot;precautions&quot;: [
+  &quot;Wear PPE per the arc-flash/shock risk assessment while testing&quot;,
+  &quot;Qualified person only, with documented justification and permit&quot;
+ ],
+ &quot;citations&quot;: [
+  &quot;nfpa70e_safety:4&quot;,
+  &quot;nfpa70e_safety:5&quot;
+ ]
+}</pre></div><div class='step ok'><span class='n'>step 3 &middot; 15.5s</span><b>final_report</b> <code>{&quot;likely_cause&quot;: &quot;Residual current equal to the phase load could indicate a CT circuit issue.&quot;, &quot;cause_category&quot;: &quot;ct_circuit&quot;, &quot;steps&quot;: [&quot;De-energize, apply lockout/tagout, wear PPE and verify absence of voltage.&quot;, &quot;Check CT circuit for open or loose connections.&quot;, &quot;Measure loop resistance and burden only with the circuit isolated per procedure.&quot;], &quot;verification&quot;: &quot;Verify the CT circuit is not open or loose by checking the loop resistance and burden measurements.&quot;, &quot;citations&quot;: [&quot;ct_vt_wiring:4&quot;, &quot;ct_vt_wiring:1&quot;, &quot;relay_basics:3&quot;]}</code><div class='th'>Buzzing at terminal block could be related to the residual current issue.</div></div>
+<p><i>stop: final_report &middot; LLM calls 3 &middot; valid tool calls 3/3 &middot; 27.2s</i></p>
+<h2>Report</h2><pre>CATEGORY: ct_circuit
+CAUSE: Residual current equal to the phase load could indicate a CT circuit issue.
+STEPS:
+1. De-energize, apply lockout/tagout, wear PPE and verify absence of voltage.
+2. Check CT circuit for open or loose connections.
+3. Measure loop resistance and burden only with the circuit isolated per procedure.
+VERIFY: Verify the CT circuit is not open or loose by checking the loop resistance and burden measurements.
+CITATIONS: ct_vt_wiring:4, ct_vt_wiring:1, relay_basics:3
+
+Educational use only. Follow your site procedures, the equipment manufacturer&#x27;s instructions, and qualified personnel.</pre>

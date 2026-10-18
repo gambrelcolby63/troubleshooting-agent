@@ -1,0 +1,18 @@
+{
+ "config": "baseline",
+ "run_name": "baseline_r2",
+ "model": "dolphin3-3b",
+ "seed": 0,
+ "temperature": 0.0,
+ "max_steps": 8,
+ "decoding": "schema",
+ "only": null,
+ "scenarios": "scenarios.jsonl",
+ "resume": true,
+ "n_cases": 35,
+ "agent_config": null,
+ "num_ctx": 4096,
+ "started_at": "2026-10-18T20:08:22.234992+00:00",
+ "wall_time_s": 550.6,
+ "finished_at": "2026-10-18T20:17:32.870144+00:00"
+}
