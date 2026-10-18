@@ -1,0 +1,5 @@
+# runtime: standard library only (talks to a local Ollama server over HTTP)
+# tests:
+pytest>=8
+# eval charts:
+matplotlib>=3.8

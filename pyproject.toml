@@ -1,0 +1,15 @@
+[project]
+name = "tsagent"
+version = "0.1.0"
+description = "Agentic electrical/equipment troubleshooting assistant with tool calls, RAG, safety guardrails and evals (educational)"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+report = ["matplotlib>=3.8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

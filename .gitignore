@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.log
+.pytest_cache/
+RESUME_BULLETS.md
+evals/results/dev_*
+evals/results/smoke*
