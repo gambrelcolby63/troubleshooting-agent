@@ -35,3 +35,13 @@ questions, out-of-domain ones 4–6). A regression test was added. The partial b
 `evals/results/broken_retrieval_v1/` for transparency. Because this bug was found on eval-set cases, the
 fix is a (small) form of tuning on the eval set: keep that in mind when reading the numbers.
 After the fix, the dev set scored 3/6 (`dev_e`); the remaining dev failures were wrong category choices by the 3B model.
+
+## v2 → v3 (motivated by v2 eval traces; disclosed as eval-set leakage)
+
+The full v2 eval run (`evals/results/agent_v2_r1.jsonl`) scored **12/35** (baseline 4/35). Traces showed retrieval
+now found the right section, but the 3B model often chose `cause_category: "unknown"`, which skipped every
+report guardrail (citation, safety, grounding). v3:
+- returns fault-category tags with each KB section (`kb/_section_categories.json`, KB metadata) and lists them in the NEXT hint;
+- rejects `unknown` when the KB *did* return relevant sections (once/twice, then accepts the model's choice; no forced category);
+- treats empty/"..." steps as placeholders.
+Dev set after v3: 6/6 (`dev_v3`). The reported `agent_r1`/`agent_r2` runs use v3, frozen before they started.

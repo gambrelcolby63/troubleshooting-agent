@@ -1,0 +1,26 @@
+{
+ "config": "agent",
+ "run_name": "agent_r1",
+ "model": "dolphin3-3b",
+ "seed": 0,
+ "temperature": 0.0,
+ "max_steps": 8,
+ "decoding": "schema",
+ "only": null,
+ "scenarios": "scenarios.jsonl",
+ "resume": true,
+ "n_cases": 35,
+ "agent_config": {
+  "max_steps": 8,
+  "max_consecutive_errors": 3,
+  "max_report_rejections": 2,
+  "max_tokens": 400,
+  "decoding": "schema",
+  "retry_temperature": 0.5,
+  "history_char_budget": 9000
+ },
+ "num_ctx": 4096,
+ "started_at": "2026-10-18T19:09:32.939847+00:00",
+ "wall_time_s": 1426.2,
+ "finished_at": "2026-10-18T19:33:19.150456+00:00"
+}
