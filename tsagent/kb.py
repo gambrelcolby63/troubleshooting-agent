@@ -32,16 +32,21 @@ class Section:
     doc_title: str
     title: str
     text: str
+    categories: tuple = ()   # fault-category tags from kb/_section_categories.json
 
 
 def load_sections(kb_dir: Path = KB_DIR) -> list[Section]:
+    import json
+    tag_file = Path(kb_dir) / "_section_categories.json"
+    tags = json.loads(tag_file.read_text()) if tag_file.exists() else {}
     sections = []
     for path in sorted(Path(kb_dir).glob("*.md")):
         raw = path.read_text()
         doc_title = re.search(r"^# (.+)$", raw, re.M).group(1).strip()
         for m in re.finditer(r"^## (\d+)\. (.+?)\n(.*?)(?=^## |\Z)", raw, re.M | re.S):
-            sections.append(Section(f"{path.stem}:{m.group(1)}", path.stem, doc_title, m.group(2).strip(),
-                                    m.group(3).strip()))
+            sid = f"{path.stem}:{m.group(1)}"
+            sections.append(Section(sid, path.stem, doc_title, m.group(2).strip(), m.group(3).strip(),
+                                    tuple(tags.get(sid, ()))))
     return sections
 
 

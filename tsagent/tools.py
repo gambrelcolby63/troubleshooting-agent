@@ -22,6 +22,7 @@ class Session:
     log: list = field(default_factory=list)             # structured troubleshooting log (log_step)
     calcs: list = field(default_factory=list)
     searches: int = 0
+    suggested_categories: list = field(default_factory=list)   # category tags of retrieved sections, best first
     question: str = ""                                  # the user's original question (for retrieval)
     searched_ids: set = field(default_factory=set)      # ids returned by search_manual specifically
     search_order: list = field(default_factory=list)    # in retrieval order (best first)
@@ -55,8 +56,12 @@ def search_manual(args: dict, s: Session) -> dict:
     for sec, score in hits[:3]:
         if True:
             results.append({"id": sec.id, "title": f"{sec.doc_title} / {sec.title}", "score": round(score, 1),
+                            "categories": list(sec.categories),
                             "text": sec.text[:SNIPPET_CHARS] + ("..." if len(sec.text) > SNIPPET_CHARS else "")})
             s.retrieved.add(sec.id)
+            for c in sec.categories:
+                if c not in s.suggested_categories:
+                    s.suggested_categories.append(c)
             if sec.id not in s.searched_ids:
                 s.searched_ids.add(sec.id)
                 s.search_order.append(sec.id)

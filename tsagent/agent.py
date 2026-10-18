@@ -79,10 +79,13 @@ class Agent:
         bad = [c for c in args["citations"] if c not in s.retrieved]
         if bad:
             problems.append(f"citations {bad} were not returned by any tool; valid ids: {sorted(s.retrieved) or 'none'}")
-        if re.search(r"<[^<>]{3,60}>", json.dumps(args)):
+        if re.search(r"<[^<>]{3,60}>", json.dumps(args)) or any(x.strip(" .") == "" for x in args["steps"]):
             problems.append("the report still contains <placeholder> text from the format example; write real content")
         if s.calcs and args.get("answer") in (None, ""):
             problems.append(f"put the calc result ({s.calcs[-1][1]:g}) with its unit in 'answer'")
+        if cat == "unknown" and s.relevant_found:
+            problems.append(f"the knowledge base DID return relevant sections {s.search_order[:3]}; choose the "
+                            f"category they support (their tags: {s.suggested_categories[:4]}) and cite them")
         if cat not in ("unknown", "unsafe_request"):
             if not (s.relevant_found or (s.calcs and cat == "procedure")):
                 problems.append("no relevant knowledge-base content was found, so you cannot know the cause: "
@@ -105,7 +108,7 @@ class Agent:
         if bad:
             r["citations"] = [c for c in r["citations"] if c in s.retrieved]
             events.append({"type": "forced_fix", "what": f"removed unverified citations {bad}"})
-        ph = re.compile(r"<[^<>]{3,60}>")
+        ph = re.compile(r"<[^<>]{3,60}>|^[\s.]*$")
         if any(ph.search(x) for x in r["steps"]):
             r["steps"] = [x for x in r["steps"] if not ph.search(x)] or [SAFETY_STEP]
             events.append({"type": "forced_fix", "what": "removed steps containing <placeholder> text"})
@@ -137,7 +140,8 @@ class Agent:
             return "NEXT: call final_report with cause_category unknown (say I don't know)."
         if s.safety_status is None:
             return "NEXT: call check_safety for the hands-on work."
-        return "NEXT: call final_report."
+        cats = f" Categories tagged on the retrieved sections: {s.suggested_categories[:4]}." if s.suggested_categories else ""
+        return "NEXT: call final_report." + cats
 
     def _compact(self, messages: list[dict]) -> None:
         """Keep the prompt inside the context window: stub out old observations first."""

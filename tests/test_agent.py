@@ -106,3 +106,18 @@ def test_retrieval_long_question_regression():
     q = "Our substation breaker opens by itself right after we close it and the lockout relay is still tripped"
     out = search_manual({"query": "immediate breaker trip"}, Session(question=q))
     assert out["status"] == "ok" and any(r["id"].startswith("breaker_trip_circuit") for r in out["results"])
+
+
+def test_unknown_rejected_when_kb_has_relevant_sections():
+    lazy = report(cause_category="unknown", likely_cause="I don't know", citations=[])
+    res, llm = run([{"tool": "search_manual", "args": {"query": "breaker trips on close"}},
+                    {"tool": "check_safety", "args": {"task": "check 86"}}, lazy, report()])
+    assert res.report["cause_category"] == "trip_circuit"
+    rej = [e for e in res.guardrail_events if e["type"] == "report_rejected"]
+    assert rej and "DID return relevant sections" in rej[0]["what"][0]
+
+
+def test_search_results_carry_category_tags():
+    s = Session(question="Our UPS keeps switching to battery even though the generator is running")
+    out = search_manual({"query": "UPS on battery generator"}, s)
+    assert out["results"][0]["categories"] == ["ups"] and s.suggested_categories[0] == "ups"
