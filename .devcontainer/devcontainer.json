@@ -1,0 +1,14 @@
+{
+  "name": "troubleshooting-agent (Python 3 + Docker + Node)",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "lts" }
+  },
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt && pip install -e . && pip install pytest && npm i -g @anthropic-ai/claude-code",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-python.vscode-pylance"]
+    }
+  }
+}
