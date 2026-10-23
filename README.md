@@ -4,6 +4,12 @@
 
 > ⚠️ **Safety disclaimer.** This is an educational portfolio project. It is not a substitute for your site's procedures, the equipment manufacturer's instructions, NFPA 70E training, or qualified personnel. Never work on energized equipment because a program told you to.
 
+## Open in Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/gambrelcolby63/troubleshooting-agent?quickstart=1)
+
+The dev container ([`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json)) is Python 3.12 on Debian bookworm, with Docker and Node.js. Creating the codespace installs the project, pytest, and the Claude Code CLI. Tests do not need a model: `python -m pytest -q`.
+
 ## The problem
 
 Field troubleshooting (protective relays, breakers, CT/VT circuits, station batteries, UPSs, motor controls) is procedure-driven. You read the symptom, pull the right section of the manual, put safety first (de-energize, LOTO, PPE, verify absence of voltage), isolate the fault step by step, and then confirm the cause with a test. I do this kind of work with technical orders in the Air National Guard, and I wanted to know how much of that discipline a small local LLM can follow once it is wrapped in an agent loop with the right tools and guardrails.
